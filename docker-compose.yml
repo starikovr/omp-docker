@@ -1,0 +1,52 @@
+version: "3.9"
+services:
+  php:
+    build:
+      ./docker/php
+    hostname: "php"
+    container_name: "php"
+    working_dir: /www/vhosts/omp
+    links:
+      - db
+    #user: www-data:www-data
+    volumes:
+    - ./omp:/www/vhosts/omp
+    entrypoint: ["php-fpm"]
+  nginx:
+    build:
+      ./docker/nginx
+    hostname: "nginx"
+    container_name: "nginx"
+    working_dir: /www/vhosts/omp
+    links:
+      - php
+    #user: nginx:nginx
+    ports:
+    - 80:80
+    volumes:
+      - ./omp:/www/vhosts/omp:rw
+    entrypoint: ["nginx", "-g", "daemon off;"]
+  db:
+    image: mysql:5.7
+    platform: linux/x86_64
+    hostname: "db"
+    container_name: "db"
+    volumes:
+      - ./docker/mysql/data:/var/lib/mysql
+    restart: always
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: vagrant
+      MYSQL_DATABASE: omp
+      MYSQL_USER: vagrant
+      MYSQL_PASSWORD: vagrant
+  node6:
+    build:
+      ./docker/node
+    platform: linux/x86_64
+    hostname: "node6"
+    container_name: "node6"
+    working_dir: /www/vhosts/omp
+    volumes:
+      - ./omp:/www/vhosts/omp

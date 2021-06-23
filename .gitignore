@@ -1,2 +1,4 @@
 omp
 .idea
+
+docker/mysql/data
