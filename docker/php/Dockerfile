@@ -43,4 +43,7 @@ RUN curl -O "https://getcomposer.org/download/1.10.22/composer.phar"
 RUN chmod a+x composer.phar
 RUN mv composer.phar /usr/local/bin/composer
 
+COPY docker-php-ext-xdebug.ini /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+COPY php.ini /usr/local/etc/php/php.ini
+
 CMD ["php-fpm"]

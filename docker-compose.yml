@@ -10,7 +10,7 @@ services:
       - db
     #user: www-data:www-data
     volumes:
-    - ./omp:/www/vhosts/omp
+    - ./omp:/www/vhosts/omp:cached
     entrypoint: ["php-fpm"]
   nginx:
     build:
@@ -24,7 +24,7 @@ services:
     ports:
     - 80:80
     volumes:
-      - ./omp:/www/vhosts/omp:rw
+      - ./omp:/www/vhosts/omp:cached
     entrypoint: ["nginx", "-g", "daemon off;"]
   db:
     image: mysql:5.7
@@ -32,7 +32,7 @@ services:
     hostname: "db"
     container_name: "db"
     volumes:
-      - ./docker/mysql/data:/var/lib/mysql
+      - ./docker/mysql/data:/var/lib/mysql:delegated
     restart: always
     ports:
       - 3306:3306
@@ -49,4 +49,4 @@ services:
     container_name: "node6"
     working_dir: /www/vhosts/omp
     volumes:
-      - ./omp:/www/vhosts/omp
+      - ./omp:/www/vhosts/omp:cached
