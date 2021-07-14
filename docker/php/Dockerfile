@@ -15,7 +15,7 @@ RUN git clone -b php7 https://github.com/php-memcached-dev/php-memcached /usr/sr
 RUN pecl install imagick \
 	&& docker-php-ext-enable imagick
 
-RUN docker-php-ext-install mbstring zip soap opcache
+RUN docker-php-ext-install mbstring zip soap opcache pcntl
 
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
 
