@@ -8,7 +8,6 @@ services:
     working_dir: /www/vhosts/omp
     links:
       - db
-    #user: www-data:www-data
     volumes:
     - ./omp:/www/vhosts/omp:cached
     entrypoint: ["php-fpm"]
@@ -20,7 +19,6 @@ services:
     working_dir: /www/vhosts/omp
     links:
       - php
-    #user: nginx:nginx
     ports:
     - 80:80
     volumes:
