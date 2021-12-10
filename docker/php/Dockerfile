@@ -1,6 +1,6 @@
 FROM php:7.1-fpm
 
-RUN apt-get update
+RUN apt-get --allow-releaseinfo-change-suite update
 RUN apt-get install -y git vim nano mc htop zip unzip memcached \
     libzip-dev libmemcached-dev  libmagickwand-dev
 

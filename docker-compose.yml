@@ -1,36 +1,36 @@
 version: "3.9"
 services:
-  php:
+  omp-php:
     build:
       ./docker/php
-    hostname: "php"
-    container_name: "php"
+    hostname: "omp-php"
+    container_name: "omp-php"
     working_dir: /www/vhosts/omp
     links:
-      - db
+      - omp-db
     #user: www-data:www-data
     volumes:
     - ./omp:/www/vhosts/omp:cached
     entrypoint: ["php-fpm"]
-  nginx:
+  omp-nginx:
     build:
       ./docker/nginx
-    hostname: "nginx"
-    container_name: "nginx"
+    hostname: "omp-nginx"
+    container_name: "omp-nginx"
     working_dir: /www/vhosts/omp
     links:
-      - php
+      - omp-php
     #user: nginx:nginx
     ports:
     - 80:80
     volumes:
       - ./omp:/www/vhosts/omp:cached
     entrypoint: ["nginx", "-g", "daemon off;"]
-  db:
+  omp-db:
     image: mysql:5.7
     platform: linux/x86_64
-    hostname: "db"
-    container_name: "db"
+    hostname: "omp-db"
+    container_name: "omp-db"
     volumes:
       - ./docker/mysql/data:/var/lib/mysql:delegated
     restart: always
@@ -41,12 +41,12 @@ services:
       MYSQL_DATABASE: omp
       MYSQL_USER: vagrant
       MYSQL_PASSWORD: vagrant
-  node6:
+  omp-node6:
     build:
       ./docker/node
     platform: linux/x86_64
-    hostname: "node6"
-    container_name: "node6"
+    hostname: "omp-node6"
+    container_name: "omp-node6"
     working_dir: /www/vhosts/omp
     volumes:
       - ./omp:/www/vhosts/omp:cached
